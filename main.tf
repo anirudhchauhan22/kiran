@@ -1,6 +1,6 @@
 # Configure the AWS provider
 provider "aws" {
-  region = "us-east-1"  # Replace with the desired AWS region
+  region = "ap-south-1"  # Replace with the desired AWS region
 }
 
 # Create a security group, but only if it doesn't exist
@@ -42,7 +42,7 @@ resource "aws_key_pair" "my_key" {
 
 # Create an EC2 instance, but only if it doesn't exist
 resource "aws_instance" "my_instance" {
-  ami           = "ami-064519b8c76274859"  # Debian 12 AMI
+  ami           = "ami-0fd05997b4dff7aac"  # Debian 12 AMI
   instance_type = "t2.micro"                # Adjust the instance type as needed
 
   # Associate the instance with the security group
