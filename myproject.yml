@@ -1,0 +1,58 @@
+---
+- name: Install Apache2 and Docker on Target Machine
+  hosts: webserver
+  become: yes
+  tasks:
+    # Update apt cache
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+
+    # Install Apache2
+    - name: Install Apache2
+      apt:
+        name: apache2
+        state: present
+
+    # Ensure Apache2 is running
+    - name: Ensure Apache2 is running
+      service:
+        name: apache2
+        state: started
+        enabled: yes
+
+    # Install prerequisites for Docker
+    - name: Install prerequisites for Docker
+      apt:
+        name:
+          - apt-transport-https
+          - ca-certificates
+          - curl
+          - software-properties-common
+        state: present
+
+    # Add Docker's official GPG key
+    - name: Add Docker's official GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    # Add Docker repository
+    - name: Add Docker repository
+      apt_repository:
+        repo: "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+        state: present
+        filename: docker
+
+    # Install Docker
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    # Ensure Docker is running
+    - name: Ensure Docker is running
+      service:
+        name: docker
+        state: started
+        enabled: yes
